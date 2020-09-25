@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Header from './Header';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Nav from './Nav';
+import Results from './Results';
+import requests from './requests';
+import Footer from './Footer';
+import Account from './Account';
 
 function App() {
+  const [selectedOption, setSelectedOption] = useState(requests.fetchTrending);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="app">
+        <Switch>
+          <Route path="/account">
+            <Account />
+            <Footer/>
+          </Route>
+          <Route path="/">
+            <Header setSelectedOption={setSelectedOption}/>
+            <Nav setSelectedOption={setSelectedOption}/>
+            <Results selectedOption={selectedOption}/>
+            <Footer/>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
